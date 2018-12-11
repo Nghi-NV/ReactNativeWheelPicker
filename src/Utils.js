@@ -67,7 +67,7 @@ export function pickerDateArray(date: string, daysCount: number = YEAR, language
 }
 
 function formatDatePicker(date: number, language: string) {
-    return moment.unix(date).locale(language && language == 'vi' ? 'vi' : 'en', localization).format('ddd MMM D');
+    return moment.unix(date).locale(language && language == 'vi' ? 'vi' : 'en', localization).format(language && language == 'vi' ? 'ddd D MMM' : 'ddd MMM D');
 }
 
 export function getHoursArray(format24: boolean) {
