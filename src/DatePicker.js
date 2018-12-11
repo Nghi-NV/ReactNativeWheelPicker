@@ -41,6 +41,7 @@ type Props = {
   hideHours?: boolean,
   hideMinutes?: boolean,
   hideAM?: boolean,
+  language?: 'en' | 'vi'
 }
 
 type State = {
@@ -109,6 +110,7 @@ export default class DatePicker extends React.Component<Props, State> {
       hideHours,
       hideMinutes,
       hideAM,
+      language
     } = this.props
     const { initHourInex, initDayInex, initMinuteInex } = this.state
     return (
@@ -118,7 +120,7 @@ export default class DatePicker extends React.Component<Props, State> {
           isAtmospheric
           isCurved
           visibleItemCount={8}
-          data={days || pickerDateArray(startDate, daysCount)}
+          data={days || pickerDateArray(startDate, daysCount, language)}
           itemTextColor={itemTextColor}
           selectedItemTextColor={selectedItemTextColor}
           onItemSelected={this.onDaySelected}
@@ -179,7 +181,7 @@ export default class DatePicker extends React.Component<Props, State> {
     const daysAfterSelectedDate = this.state.daysAfterSelectedDate
     const hours = selectedDate.getHours()
     const minutes = selectedDate.getMinutes()
-    if (event.data === 'Today') {
+    if (event.data === 'Today' || event.data === 'Hôm nay') {
       selectedDate = new Date()
     } else {
       selectedDate = increaseDateByDays(
