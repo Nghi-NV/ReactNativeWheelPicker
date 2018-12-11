@@ -3,7 +3,8 @@
  * @flow
  * */
 
-import moment from 'moment'
+import moment from 'moment';
+import localization from 'moment/locale/vi';
 
 const AM = 'AM'
 const PM = 'PM'
@@ -45,7 +46,7 @@ export function increaseDateByDays(date: Date, numOfDays: ?number) {
     return nextDate
 }
 
-export function pickerDateArray(date: string, daysCount: number = YEAR) {
+export function pickerDateArray(date: string, daysCount: number = YEAR, language = 'en') {
     const startDate = date ? new Date(date) : new Date()
     const arr = []
 
@@ -53,19 +54,20 @@ export function pickerDateArray(date: string, daysCount: number = YEAR) {
         const ithDateFromStartDate = (Date.parse(startDate) / ONE_SECOND) + (i * ONE_DAY_IN_SECONDS)
         if (moment.unix(Date.parse(new Date()) / ONE_SECOND).format('MM/DD/YYYY') ===
             moment.unix(ithDateFromStartDate).format('MM/DD/YYYY')) {
-            arr.push(TODAY)
+
+            arr.push(language && language == 'vi' ? 'Hôm nay' : 'Today')
         }
         else {
             arr.push(
-                formatDatePicker(ithDateFromStartDate)
+                formatDatePicker(ithDateFromStartDate, language)
             )
         }
     }
     return arr
 }
 
-function formatDatePicker(date: number) {
-    return moment.unix(date).format('ddd MMM D');
+function formatDatePicker(date: number, language: string) {
+    return moment.unix(date).locale(language && language == 'vi' ? 'vi' : 'en', localization).format('ddd MMM D');
 }
 
 export function getHoursArray(format24: boolean) {
